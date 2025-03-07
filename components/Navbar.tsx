@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const Navbar = () => {
   return (
@@ -15,9 +16,11 @@ const Navbar = () => {
           />
           <h1 className="font-bold text-3xl zilla-slab-bold">Catan Tracker</h1>
         </div>
-        <button className="bg-[#b71620] text-white px-4 py-2 rounded-md hover:bg-[#a01319] transition-colors zilla-slab-medium">
-          Login
-        </button>
+        <Link href = "/signin">
+          <button className="bg-[#b71620] text-white px-4 py-2 rounded-md hover:bg-[#a01319] transition-colors zilla-slab-medium">
+            Login
+          </button>
+        </Link>
       </div>
     </nav>
   )
