@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
@@ -8,6 +8,17 @@ import { useRouter } from 'next/navigation';
 const SignIn = () => {
   const router = useRouter();
   const supabase = createClientComponentClient();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        router.replace('/dashboard');
+      }
+    };
+    
+    checkSession();
+  }, [router, supabase.auth]);
 
   const handleSignInWithGoogle = async () => {
     await supabase.auth.signInWithOAuth({
