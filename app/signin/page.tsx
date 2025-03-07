@@ -85,10 +85,10 @@ const SignIn = () => {
         <div className="max-w-md w-full px-8">
           <div className="flex items-center justify-center mb-8">
             <Image 
-              src="/catan-logo.svg" 
+              src="/catantrackerlogo.png" 
               alt="Catan Tracker Logo" 
-              width={50} 
-              height={50}
+              width={70} 
+              height={70}
               className="object-contain"
             />
             <h1 className="font-bold text-3xl ml-3 zilla-slab-bold">Catan Tracker</h1>

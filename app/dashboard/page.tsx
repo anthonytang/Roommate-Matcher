@@ -68,7 +68,7 @@ const Dashboard = () => {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    router.replace('/signin');
+    router.replace('/');
   };
 
   const toggleSidebar = () => {
@@ -97,10 +97,10 @@ const Dashboard = () => {
           {isSidebarOpen && (
             <div className="flex items-center space-x-2">
               <Image 
-                src="/catan-logo.svg" 
+                src="/catantrackerlogo.png" 
                 alt="Catan Tracker Logo" 
-                width={30} 
-                height={30}
+                width={40} 
+                height={40}
                 className="object-contain"
               />
               <h1 className="font-bold text-xl zilla-slab-bold">Catan Tracker</h1>
