@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { BarChart3, BookOpen, Users, LogOut, ChevronLeft, ChevronRight } from 'lucide-react';
 import Leaderboard from '@/components/Leaderboard';
+import Games from '@/components/games';
 const Dashboard = () => {
   const router = useRouter();
   const supabase = createClientComponentClient();
@@ -78,7 +79,7 @@ const Dashboard = () => {
       case 'leaderboard':
         return <Leaderboard />;
       case 'games':
-        return <div className="p-6"><h2 className="text-2xl font-bold mb-4">Games</h2><p>Games history will appear here</p></div>;
+        return <Games />;
       case 'compare':
         return <div className="p-6"><h2 className="text-2xl font-bold mb-4">Compare Players</h2><p>Player comparison tools will appear here</p></div>;
       default:
