@@ -13,20 +13,69 @@ const SignIn = () => {
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        router.replace('/dashboard');
+        try {
+          // Check if user exists in players table
+          const { data: existingPlayer, error: queryError } = await supabase
+            .from('players')
+            .select('id')
+            .eq('user_id', session.user.id)
+            .single();
+
+          if (queryError && queryError.code !== 'PGRST116') {
+            console.error('Error checking for existing player:', queryError);
+          }
+
+          // If player doesn't exist, add them
+          if (!existingPlayer) {
+            console.log('Creating new player record');
+            const { error: insertError } = await supabase.from('players').insert([
+              {
+                user_id: session.user.id,
+                name: session.user.user_metadata.full_name || session.user.email,
+                games_played: 0,
+                win_percentage: 0,
+                points_per_game: 0,
+                roads_per_game: 0,
+                settlements_per_game: 0,
+                cities_per_game: 0,
+                dev_cards_per_game: 0,
+                largest_army_count: 0,
+                longest_road_count: 0
+              }
+            ]);
+
+            if (insertError) {
+              console.error('Error creating player record:', insertError);
+            }
+          } else {
+            console.log('Player record already exists');
+          }
+
+          router.replace('/dashboard');
+        } catch (error) {
+          console.error('Session check error:', error);
+        }
       }
     };
     
     checkSession();
-  }, [router, supabase.auth]);
+  }, [router, supabase]);
 
   const handleSignInWithGoogle = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/dashboard`,
-      },
-    });
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/dashboard`,
+        },
+      });
+      
+      if (error) {
+        console.error('Google sign-in error:', error);
+      }
+    } catch (error) {
+      console.error('Sign-in process failed:', error);
+    }
   };
 
   return (
