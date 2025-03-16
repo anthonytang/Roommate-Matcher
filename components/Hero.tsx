@@ -8,9 +8,9 @@ const Hero = () => {
 
         </div>
         <div className='w-1/2 flex flex-col justify-center items-center min-h-screen pr-5'>
-            <h1 className="text-4xl md:text-6xl text-center font-bold text-white mb-4 zilla-slab-bold">Track Your Catan Games and Beat Your Friends</h1>
+            <h1 className="text-4xl md:text-6xl text-center font-bold text-white mb-4 zilla-slab-bold"></h1>
 
-            <p className='mt-8 text-xl text-neutral-200 zilla-slab-regular'>Start tracking your Catan games and see how you stack up against your friends.</p>
+            <p className='mt-8 text-xl text-neutral-200 zilla-slab-regular'></p>
         </div>
       </div>
       <div 

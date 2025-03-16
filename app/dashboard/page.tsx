@@ -10,64 +10,10 @@ import Games from '@/components/games';
 import Compare from '@/components/Compare';
 const Dashboard = () => {
   const router = useRouter();
-  const supabase = createClientComponentClient();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState('games');
 
-  useEffect(() => {
-    const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        router.replace('/signin');
-      } else {
-        try {
-          // Check if user exists in players table
-          const { data: existingPlayer, error: queryError } = await supabase
-            .from('players')
-            .select('id')
-            .eq('user_id', session.user.id)
-            .single();
-
-          if (queryError && queryError.code !== 'PGRST116') {
-            console.error('Error checking for existing player:', queryError);
-          }
-
-          // If player doesn't exist, add them
-          if (!existingPlayer) {
-            console.log('Creating new player record');
-            const { error: insertError } = await supabase.from('players').insert([
-              {
-                user_id: session.user.id,
-                name: session.user.user_metadata.full_name || session.user.email,
-                games_played: 0,
-                win_percentage: 0,
-                points_per_game: 0,
-                roads_per_game: 0,
-                settlements_per_game: 0,
-                cities_per_game: 0,
-                dev_cards_per_game: 0,
-                largest_army_count: 0,
-                longest_road_count: 0
-              }
-            ]);
-
-            if (insertError) {
-              console.error('Error creating player record:', insertError);
-            }
-          } else {
-            console.log('Player record already exists');
-          }
-        } catch (error) {
-          console.error('Session check error:', error);
-        }
-      }
-    };
-    
-    checkSession();
-  }, [router, supabase]);
-
   const handleLogout = async () => {
-    await supabase.auth.signOut();
     router.replace('/');
   };
 
@@ -78,11 +24,11 @@ const Dashboard = () => {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'leaderboard':
-        return <Leaderboard />;
+        //return <Leaderboard />;
       case 'games':
-        return <Games />;
+        //return <Games />;
       case 'compare':
-        return <Compare />;
+        //return <Compare />;
       default:
         return <div className="p-6"><h2 className="text-2xl font-bold mb-4">Games</h2><p>Games history will appear here</p></div>;
     }

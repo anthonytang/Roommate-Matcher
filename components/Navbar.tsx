@@ -14,9 +14,9 @@ const Navbar = () => {
             height={60}
             className="object-contain"
           />
-          <h1 className="font-bold text-3xl zilla-slab-bold">Catan Tracker</h1>
+          <h1 className="font-bold text-3xl zilla-slab-bold">Roommate Matcher</h1>
         </div>
-        <Link href = "/signin">
+        <Link href = "/dashboard">
           <button className="bg-[#b71620] text-white px-4 py-2 rounded-md hover:bg-[#a01319] transition-colors zilla-slab-medium">
             Login
           </button>
