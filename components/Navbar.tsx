@@ -1,26 +1,33 @@
 import React from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'
 
 const Navbar = () => {
   return (
-    <nav className="bg-neutral-50 text-neutral-900 px-6 py-3 shadow-sm">
+    <nav className="fixed top-0 left-0 w-full bg-neutral-50 text-neutral-900 px-6 py-1 shadow-sm z-50">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-3">
           <Image 
-            src="/catantrackerlogo.png" 
-            alt="Catan Tracker Logo" 
-            width={60} 
-            height={60}
+            src="/logo.png" 
+            alt="Owl Match Logo" 
+            width={100} 
+            height={100}
             className="object-contain"
           />
-          <h1 className="font-bold text-3xl zilla-slab-bold">Roommate Matcher</h1>
+          <h1 className="font-bold text-3xl zilla-slab-bold">Owl Match</h1>
         </div>
-        <Link href = "/dashboard">
-          <button className="bg-[#b71620] text-white px-4 py-2 rounded-md hover:bg-[#a01319] transition-colors zilla-slab-medium">
-            Login
-          </button>
-        </Link>
+        <div className = "flex items-center space-x-4">
+          <SignedOut>
+            <SignInButton>
+              <button className = "bg-[#012168] text-white px-4 py-2 rounded-md hover:bg-[#01143e] transition-colors zilla-slab-medium">
+                Login
+              </button>
+            </SignInButton>
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </div>
       </div>
     </nav>
   )

@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Zilla_Slab } from "next/font/google";
+import {
+  ClerkProvider,
+} from '@clerk/nextjs'
 import "./globals.css";
+import ClientProviders from "@/components/ClientProviders";
+import AutoLogoutProvider from "@/components/AutoLogoutProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,12 +34,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${zillaSlab.variable} bg-neutral-50 text-neutral-900 antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`${geistSans.variable} ${geistMono.variable} ${zillaSlab.variable} bg-neutral-50 text-neutral-900 antialiased`}>
+          <ClientProviders>
+          <AutoLogoutProvider />
+            {children}
+          <AutoLogoutProvider />
+          </ClientProviders>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

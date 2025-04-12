@@ -13,42 +13,61 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id                   String    @id @default(uuid()) 
-  email                String    @unique
-  name                 String
-  phoneNumber          String    @unique
-  residentialCollege   String
-  gender               String
-  year                 String
-  searchingPreferences String
-  role                 Role      @default(USER)
-
-  // One-to-One Relationship to QuestionAnswer
-  questionAnswers      QuestionAnswer?
-
-  bestMatches          User[]    @relation("UserMatches")
-  matchedBy            User[]    @relation("UserMatches")
-
-  createdAt            DateTime  @default(now())
-  updatedAt            DateTime  @updatedAt
-}
-
-model QuestionAnswer {
-  id        String  @id @default(uuid()) 
-  userId    String  @unique // Ensures one user can have only one set of answers
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  question1 String?
-  question2 String?
-  question3 String?
-  question4 String?
-  question5 String?
-
-  createdAt DateTime @default(now())
-}
-
 enum Role {
   USER
   ADMIN
+}
+
+model User {
+  id                   String           @id @default(uuid())
+  email                String           @unique
+  name                 String
+  phoneNumber          String           @unique
+  residentialCollege   String
+  gender               String
+  year                 String
+  livingType           String
+  major                String
+  roommateStatus       String
+  lookingFor           Json
+  bringingItems        Json
+  bio                  String
+  role                 Role             @default(USER)
+
+  answers              QuestionAnswer?
+  
+  matchResult          MatchResult?     @relation("UserMatchResult")
+
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+}
+
+model QuestionAnswer {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  user      User     @relation(fields: [email], references: [email], onDelete: Cascade)
+  // Answers stored as an array (JSON) of numeric answers (e.g., [3, 1, 4, ...])
+  answers   Json     
+  // Optional: weights for each question (if needed)
+  weights   Json?    
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Question {
+  id         Int            @id @default(autoincrement())
+  text       String         // The survey question text
+  options    Json           // A JSON array of possible answers, e.g., ["Yes", "No", ...]
+  category   String         // Differentiates between ON_CAMPUS and OFF_CAMPUS questions
+  createdAt  DateTime       @default(now())
+}
+
+model MatchResult {
+  id            String    @id @default(uuid())
+  userId        String    @unique  // Ensures one match result per user
+  // A JSON array of match objects, for example:
+  // [ { "matchedUserId": "abc", "similarity": 0.92 }, { "matchedUserId": "def", "similarity": 0.88 } ]
+  matches       Json      
+  createdAt     DateTime  @default(now())
+  user          User      @relation("UserMatchResult", fields: [userId], references: [id])
 }
