@@ -161,10 +161,14 @@ Open http://localhost:3000 in your browser.
 Ensure your production environment has the same env vars, and run both the Celery worker & beat alongside your Next.js server.
 
 ## 👥 Team & Contributions
-Member 1    🔧 Bootstrapped Next.js project; established GitHub repo;  
-Member 2    🤖 Designed and implemented the matching/similarity algorithm in Python/Celery.  
-Member 3    🔍 Researched & selected optimal survey questions; crafted presentation slides.  
-Member 4    🔍 Researched & selected optimal survey questions; crafted presentation slides.  
+
+| Name              | Contributions                                                         |
+| ----------------- | --------------------------------------------------------------------- |
+| Anthony Tang      | 🔧 Bootstrapped Next.js project; established GitHub repo                 |
+| Vikram Shah       | 🤖 Designed and implemented the matching/similarity algorithm in Python/Celery |
+| Snikitha Kassey   | 🔍 Researched & selected optimal survey questions; crafted presentation slides |
+| Ian Chen          | 🔍 Researched & selected optimal survey questions; crafted presentation slides |
+  
 
 ## 📖 Further Reading
 Next.js: https://nextjs.org/docs
