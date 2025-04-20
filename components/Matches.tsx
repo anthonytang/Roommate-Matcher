@@ -10,19 +10,15 @@ interface MatchResult {
   cosine_weighted: number[][];
 }
 
-// Re‑use your existing GET_USER query shape
 const GET_USER = gql`
   query GetUser($email: String!) {
-    getUser(email: $email) {
-      id
-      name
-    }
+    getUser(email: $email) { id name }
   }
 `;
 
 const POLL_INTERVAL = 5000; // ms
 
-// Fetch & display one match’s name + score
+// ========== MatchListItem ==========
 const MatchListItem: React.FC<{
   email: string;
   score: number;
@@ -35,7 +31,8 @@ const MatchListItem: React.FC<{
 
   let displayName = email;
   if (loading) displayName = 'Loading…';
-  else if (!loading && !error && data?.getUser) displayName = data.getUser.name;
+  else if (!loading && !error && data?.getUser)
+    displayName = data.getUser.name;
 
   return (
     <li className="flex items-center justify-between p-4 border rounded-md bg-gray-50">
@@ -55,24 +52,15 @@ const MatchListItem: React.FC<{
   );
 };
 
+// ========== MatchesPage ==========
 const MatchesPage: React.FC = () => {
+  // ⬇️ 1) All hooks up top, before any return
   const { user, isLoaded } = useUser();
   const [data, setData] = useState<MatchResult | null>(null);
   const [loadingInitial, setLoadingInitial] = useState(true);
   const [polling, setPolling] = useState(false);
   const [modalEmail, setModalEmail] = useState<string | null>(null);
 
-  // 1) wait for Clerk
-  if (!isLoaded) {
-    return <div className="p-8">Loading your session…</div>;
-  }
-  // 2) require sign‑in
-  if (!user || !user.primaryEmailAddress) {
-    return <div className="p-8">Please sign in to see your matches.</div>;
-  }
-  const email = user.primaryEmailAddress.emailAddress;
-
-  // 3) poll /api/matches until we get 200
   const fetchMatches = useCallback(async () => {
     try {
       const res = await fetch('/api/matches');
@@ -99,6 +87,15 @@ const MatchesPage: React.FC = () => {
     fetchMatches();
   }, [fetchMatches]);
 
+  // ⬇️ 2) Now it’s safe to do your early returns:
+  if (!isLoaded) {
+    return <div className="p-8">Loading your session…</div>;
+  }
+  if (!user || !user.primaryEmailAddress) {
+    return <div className="p-8">Please sign in to see your matches.</div>;
+  }
+  const email = user.primaryEmailAddress.emailAddress;
+
   if (loadingInitial) {
     return <div className="p-8">Loading your matches…</div>;
   }
@@ -111,7 +108,7 @@ const MatchesPage: React.FC = () => {
     );
   }
 
-  // 4) compute top‑10 matches (skip self)
+  // ⬇️ 3) Final render once we have data
   const idx = data.emails.indexOf(email);
   const row = data.cosine_weighted[idx];
   const matches = data.emails
@@ -122,26 +119,23 @@ const MatchesPage: React.FC = () => {
 
   return (
     <div className="relative min-h-screen bg-gray-100 p-8">
-      <div className="min-h-screen bg-gray-100 p-8">
-        <div className="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6">
-          <h1 className="text-3xl font-bold mb-6">Your Top Matches</h1>
-          <ul className="space-y-4">
-            {matches.map((m) => (
-              <MatchListItem
-                key={m.email}
-                email={m.email}
-                score={m.score}
-                onView={(e) => setModalEmail(e)}
-              />
-            ))}
-          </ul>
-        </div>
-
-        {/* modal */}
-        {modalEmail && (
-          <UserModal email={modalEmail} onClose={() => setModalEmail(null)} />
-        )}
+      <div className="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6">
+        <h1 className="text-3xl font-bold mb-6">Your Top Matches</h1>
+        <ul className="space-y-4">
+          {matches.map((m) => (
+            <MatchListItem
+              key={m.email}
+              email={m.email}
+              score={m.score}
+              onView={(e) => setModalEmail(e)}
+            />
+          ))}
+        </ul>
       </div>
+
+      {modalEmail && (
+        <UserModal email={modalEmail} onClose={() => setModalEmail(null)} />
+      )}
     </div>
   );
 };
