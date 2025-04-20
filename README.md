@@ -1,6 +1,6 @@
 # Roommate Matcher
 
-A Next.js + Prisma + Celery/Redis application to help students find their ideal roommates by answering a short survey and ranking question categories. The app precomputes pairwise similarity scores in the background and presents each user’s top 10 best matches.
+A Next.js + GraphQL + Prisma + MySQL + Celery/Redis application to help students find their ideal roommates by answering a short survey and ranking question categories. The app precomputes weighted cosine similarity scores in the background and presents each user’s top 10 best matches.
 
 ---
 
@@ -15,7 +15,7 @@ A Next.js + Prisma + Celery/Redis application to help students find their ideal 
 ---
 
 ## 📁 Repository Structure
-
+```bash
 /
 ├─ .env                     # Environment variables (DATABASE_URL, REDIS_URL, etc.)
 ├─ .gitignore               # Files and folders to ignore in Git
@@ -97,7 +97,7 @@ A Next.js + Prisma + Celery/Redis application to help students find their ideal 
    ├─ lib/                  # Python libraries
    ├─ share/                # Shared data
    └─ pyvenv.cfg            # Virtualenv configuration
-
+```
 ---
 
 ## 🛠️ Prerequisites
@@ -116,10 +116,12 @@ A Next.js + Prisma + Celery/Redis application to help students find their ideal 
    ```bash
    npm install
    # or yarn
+   ```
 
 2. **Configure environment** 
 Copy `.env.example` to `.env` and fill in:
-    ```DATABASE_URL="mysql://USER:PASSWORD@HOST:PORT/DB"
+    ```bash
+    DATABASE_URL="mysql://USER:PASSWORD@HOST:PORT/DB"
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="..."
     CLERK_SECRET_KEY="..."
     PYTHON_DATABASE_URL="mysql://USER:PASSWORD@HOST:PORT/DB_NAME"
@@ -127,33 +129,42 @@ Copy `.env.example` to `.env` and fill in:
     NEXT_PUBLIC_CLERK_SIGN_UP_URL=/signup
     NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL=/dashboard
     NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL=/dashboard
+    ```
 
 3. **Set up Prisma** 
-    ```npx prisma migrate dev     # create your database schema
+    ```bash
+    npx prisma migrate dev     # create your database schema
     npm run prisma:seed        # populate sample data (if any)
+    ```
 
-4. **Run Redis & Celery** 
+4. **Run Redis & Celery**  
 In one terminal:
-    ```celery -A celery_config worker --loglevel=info
-In another:
-    ```celery -A celery_config beat --loglevel=info
+    ```bash
+    celery -A celery_config worker --loglevel=info
+    ```
+   In another:
+   ```bash
+   celery -A celery_config beat --loglevel=info
+   ```
 
-5. **Start Next.js** 
-    ```npm run dev
+6. **Start Next.js** 
+    ```npm run dev```
 
-6. **Visit** 
+7. **Visit** 
 Open http://localhost:3000 in your browser.
 
 ## 📦 Production
-    ```npm run build
-    npm start
+   ```bash
+   npm run build
+   npm start
+   ```
 Ensure your production environment has the same env vars, and run both the Celery worker & beat alongside your Next.js server.
 
 ## 👥 Team & Contributions
-Member 1    🔧 Bootstrapped Next.js project; established GitHub repo;
-Member 2    🤖 Designed and implemented the matching/similarity algorithm in Python/Celery.
-Member 3    🔍 Researched & selected optimal survey questions; crafted presentation slides.
-Member 4    🔍 Researched & selected optimal survey questions; crafted presentation slides.
+Member 1    🔧 Bootstrapped Next.js project; established GitHub repo;  
+Member 2    🤖 Designed and implemented the matching/similarity algorithm in Python/Celery.  
+Member 3    🔍 Researched & selected optimal survey questions; crafted presentation slides.  
+Member 4    🔍 Researched & selected optimal survey questions; crafted presentation slides.  
 
 ## 📖 Further Reading
 Next.js: https://nextjs.org/docs
@@ -166,4 +177,4 @@ Clerk (Auth): https://docs.clerk.com/
 
 Tailwind CSS: https://tailwindcss.com/docs
 
-Thank you for using Roommate Matcher! 
+## Thank you for using Roommate Matcher! 
