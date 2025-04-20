@@ -64,6 +64,7 @@ export const typeDefs = `
 
     type Mutation {
         submitQuestionAnswers(email: String!, answers: JSON!): QuestionAnswer!
+        submitWeights(email: String!, weights: JSON!): QuestionAnswer!
         updateUserInfo(
             email: String!
             name: String!

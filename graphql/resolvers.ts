@@ -33,6 +33,13 @@ export const resolvers = {
           create: { email, answers },
         });
       },
+      submitWeights: async (_: any, args: { email: string, weights: any }) => {
+        const { email, weights } = args;
+        return await prisma.questionAnswer.update({
+          where: { email },
+          data: { email, weights },
+        });
+      },
       updateUserInfo: async (_: any, args: {
         email: string;
         name: string;

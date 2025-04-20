@@ -62,3 +62,18 @@ export const SUBMIT_ANSWERS = gql`
     }
   }
 `;
+
+export const SUBMIT_WEIGHTS = gql`
+  mutation SubmitWeights(
+    $email: String!,
+    $weights: JSON!
+  ) {
+    submitWeights(
+      email: $email,
+      weights: $weights
+    ) {
+      email
+      weights
+    }
+  }
+`;
