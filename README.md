@@ -165,7 +165,7 @@ Ensure your production environment has the same env vars, and run both the Celer
 | Name              | Contributions                                                         |
 | ----------------- | --------------------------------------------------------------------- |
 | Anthony Tang      | 🔧 Bootstrapped Next.js project; established GitHub repo                 |
-| Vikram Shah       | 🤖 Designed and implemented the matching/similarity algorithm in Python/Celery |
+| Vikram Shah       | 🤖 Designed and implemented the matching/similarity algorithm in Python |
 | Snikitha Kassey   | 🔍 Researched & selected optimal survey questions; crafted presentation slides |
 | Ian Chen          | 🔍 Researched & selected optimal survey questions; crafted presentation slides |
   
