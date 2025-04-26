@@ -103,7 +103,7 @@ const MatchesPage: React.FC = () => {
     return (
       <div className="p-8">
         <h2 className="text-2xl font-bold mb-4">Matches Calculating…</h2>
-        <p>This may take a couple of minutes. Check back soon!</p>
+        <p>Please come back tomorrow to see your top matches!</p>
       </div>
     );
   }
