@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 import Redis from 'ioredis';
 
-const redis = new Redis({ host: 'localhost', port: 6379, db: 2 });
+const redis = new Redis(process.env.NEXT_PUBLIC_REDIS_URL!);
 
 export async function GET() {
   try {
