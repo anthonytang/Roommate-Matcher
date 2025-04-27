@@ -20,7 +20,7 @@ question_answer_table = Table("QuestionAnswer", metadata, autoload_with=engine)
 sample_data = [
     {
         "id": 1,
-        "email": "anthonytang42@gmail.com",
+        "email": "anthony.tang.tx@gmail.com",
         "answers": json.dumps({
             "34": "Yes",
             "35": "Yes",
@@ -68,7 +68,7 @@ sample_data = [
     },
     {
         "id": 2,
-        "email": "anthony.tang.tx@gmail.com",
+        "email": "art11@gmail.com",
         "answers": json.dumps({
             "34": "No",
             "35": "No",
