@@ -68,7 +68,7 @@ sample_data = [
     },
     {
         "id": 2,
-        "email": "art11@gmail.com",
+        "email": "art11@rice.edu",
         "answers": json.dumps({
             "34": "No",
             "35": "No",
