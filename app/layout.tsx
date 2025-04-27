@@ -24,9 +24,6 @@ const zillaSlab = Zilla_Slab({
 export const metadata: Metadata = {
   title: "Owl Match",
   description: "Find your perfect roommate match!",
-  icons: {
-    icon: "/minilogo.png",
-  },
 };
 
 export default function RootLayout({
