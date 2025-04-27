@@ -37,7 +37,7 @@ const UserModal: React.FC<Props> = ({ email, onClose }) => {
 
   if (loading) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-md">
+      <div className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm flex items-center justify-center">
         <div className="bg-white rounded-lg p-6 w-80 text-center">
           Loading…
         </div>
